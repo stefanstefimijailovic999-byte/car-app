@@ -14,6 +14,9 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+const oglasRoutes = require('./routes/oglasRoutes');
+app.use('/api/oglasi', oglasRoutes);
+
 // Test ruta
 app.get('/', (req, res) => {
   res.json({ message: 'Car App API radi!' });
