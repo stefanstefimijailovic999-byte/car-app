@@ -17,6 +17,12 @@ app.use('/api/auth', authRoutes);
 const oglasRoutes = require('./routes/oglasRoutes');
 app.use('/api/oglasi', oglasRoutes);
 
+const porukaRoutes = require('./routes/porukaRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
+app.use('/api/poruke', porukaRoutes);
+app.use('/api/admin', adminRoutes);
+
 // Test ruta
 app.get('/', (req, res) => {
   res.json({ message: 'Car App API radi!' });
