@@ -65,3 +65,40 @@ exports.prijava = asyncHandler(async (req, res) => {
 exports.mojProfil = asyncHandler(async (req, res) => {
   res.json({ korisnik: req.korisnik });
 });
+
+// @route  POST /api/auth/omiljeni/:oglasId
+// @access privatno
+exports.dodajUOmiljene = asyncHandler(async (req, res) => {
+  const User = require('../models/User');
+  const korisnik = await User.findById(req.korisnik._id);
+
+  if (!korisnik.omiljeni.includes(req.params.oglasId)) {
+    korisnik.omiljeni.push(req.params.oglasId);
+    await korisnik.save();
+  }
+
+  res.json({ omiljeni: korisnik.omiljeni });
+});
+
+// @route  DELETE /api/auth/omiljeni/:oglasId
+// @access privatno
+exports.ukloniIzOmiljenih = asyncHandler(async (req, res) => {
+  const User = require('../models/User');
+  const korisnik = await User.findById(req.korisnik._id);
+
+  korisnik.omiljeni = korisnik.omiljeni.filter(
+    (id) => id.toString() !== req.params.oglasId
+  );
+  await korisnik.save();
+
+  res.json({ omiljeni: korisnik.omiljeni });
+});
+
+// @route  GET /api/auth/omiljeni
+// @access privatno
+exports.dohvatiOmiljene = asyncHandler(async (req, res) => {
+  const User = require('../models/User');
+  const korisnik = await User.findById(req.korisnik._id).populate('omiljeni');
+
+  res.json(korisnik.omiljeni);
+});

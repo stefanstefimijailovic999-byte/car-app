@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
   aktivan: {
     type: Boolean,
     default: true
-  }
+  },
+  omiljeni: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Oglas'
+  }]
 }, {
   timestamps: true
 });
